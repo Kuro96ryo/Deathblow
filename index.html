@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="style.css" >
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+	</head>
+	
+	<body>
+		<main id="app">
+      <div v-if="center" key="center" id="center">
+        <h1>必殺技</h1>
+		    <p class="content">～最強の一撃をみせてみろ～</p>
+        <p v-on:click="watchLeft" id="button">始める</p>
+      </div>
+             
+      <div v-if="left" key="left" id="left">
+        <p id="ti">名前</p>
+        <input type="text" id="name" v-model="name" placeholder="名前を入力してくれ！"><br>
+        <P id="ti">文字数選択</P>
+        <select v-model="moji" id="select">
+          <option>2文字</option>
+          <option>3文字</option>
+          <option>4文字</option>
+          <option>5文字</option>
+        </select>
+        <br>
+        <div v-on:click="watchRight" id="button2">必殺技を出す</div>
+      </div>
+             
+      <div v-if="right" key="right" id="right">
+        <p id="nameupPlus">{{name}}は</p>
+        <h1 id="rere">{{result}}</h1>
+        <p id="nameup">をくりだした</p>
+        <h4 id="tweet" v-on:click="popUpTweetWindow">ツイート</h4>
+        <p v-on:click="nextcalc" id="button2">もう一度</p>
+        <p v-on:click="watchCenter" id="button2">最初に戻る</p>
+      </div>
+    </main> 
+    
+      <script>
+        var app = new Vue({
+          el: "#app",
+          data() {
+            return {
+              center:true,
+              left: false,
+              right: false,
+              name:'',
+              moji:'2文字',
+              result:'',
+            }
+          },
+          methods: {
+            watchCenter: function() {
+              this.center = true;
+              this.left = false;
+              this.right = false;
+              this.name='';
+              this.moji='5文字',
+              this.result='';
+            },
+            watchLeft: function() {
+              this.center = false;
+              this.left = true;
+              this.right = false;
+            },
+            watchRight: function() {
+              this.center = false;
+              this.left = false;
+              this.right = true;
+              this.namecalc();
+              var moji=this.moji
+              if(moji=='2文字'){
+                var result = this.twocalc();
+              } else if(moji=='3文字'){
+                var result = this.threecalc();
+              } else if(moji=='4文字'){
+                var result = this.fourcalc();
+              }else if(moji=='5文字'){
+                var result = this.fivecalc();
+              }
+              this.result = result
+            },
+            twocalc:function(){
+              var returnnum;
+              var num;
+              var one=[
+              '双','散','裂','衝','王','真','破','攻','斬',
+              '閃','襲','暴','舞','羅','空','剣','滅','極',
+              '魔','封','覇','陣','刃','翼','絶','乱','天',
+              '攻','護','弾','砕','砲','血','翔','弓','蹴',
+              '牙','拳','断','蒼','月','憤','傲','炎','讐',
+              '終','黒','竜','華','星','聖','神','虚','燐',
+              '氷','風','雷','邪','武','究','獄','零','夜',
+              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
+              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
+              '死','幻','無','皇'
+              ];
+              var two=[
+              '伏竜','朧月','月光','竜裂','竜穿','鳳凰',
+              '幻影','虚無','緋炎','終焉','刹那','影月',
+              '紅蓮','煉獄','空蝉','陽炎','蒼穹','月虹',
+              '白夜','緋天','華炎','氷点','殲滅','閃光',
+              '氷蒼','火焔','氷華','血讐','破天','流星',
+              '天空','滅殺','陽影','太陽','星影','凶星',
+              '天照','砕火','烈光','開世','撤雷','灼刀',
+              '裂風','浄天','牙突'
+              ];
+              var check=Math.floor(Math.random() *100);
+              if (check<80){
+                returnnum= one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+              } else {
+                returnnum= two[Math.floor(Math.random() * two.length)];
+              }
+              return returnnum;
+            },
+            threecalc:function(){
+              var returnnum;
+              var num;
+              var one=[
+              '双','散','裂','衝','王','真','破','攻','斬',
+              '閃','襲','暴','舞','羅','空','剣','滅','極',
+              '魔','封','覇','陣','刃','翼','絶','乱','天',
+              '攻','護','弾','砕','砲','血','翔','弓','蹴',
+              '牙','拳','断','蒼','月','憤','傲','炎','讐',
+              '終','黒','竜','華','星','聖','神','虚','燐',
+              '氷','風','雷','邪','武','究','獄','零','夜',
+              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
+              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
+              '死','幻','無','皇'
+              ];
+              return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+            },
+            fourcalc:function(){
+              var returnnum;
+              var num;
+              var one=[
+              '双','散','裂','衝','王','真','破','攻','斬',
+              '閃','襲','暴','舞','羅','空','剣','滅','極',
+              '魔','封','覇','陣','刃','翼','絶','乱','天',
+              '攻','護','弾','砕','砲','血','翔','弓','蹴',
+              '牙','拳','断','蒼','月','憤','傲','炎','讐',
+              '終','黒','竜','華','星','聖','神','虚','燐',
+              '氷','風','雷','邪','武','究','獄','零','夜',
+              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
+              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
+              '死','幻','無','皇'
+              ];
+              return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+            },
+            fivecalc:function(){
+              var returnnum;
+              var num;
+              var one=[
+              '双','散','裂','衝','王','真','破','攻','斬',
+              '閃','襲','暴','舞','羅','空','剣','滅','極',
+              '魔','封','覇','陣','刃','翼','絶','乱','天',
+              '攻','護','弾','砕','砲','血','翔','弓','蹴',
+              '牙','拳','断','蒼','月','憤','傲','炎','讐',
+              '終','黒','竜','華','星','聖','神','虚','燐',
+              '氷','風','雷','邪','武','究','獄','零','夜',
+              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
+              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
+              '死','幻','無','皇'
+              ];
+              return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+            },
+            nextcalc:function(){
+              var moji= this.moji;
+              var returnnum;
+              if(moji=="2文字"){
+                returnnum=this.twocalc();
+              }else if(moji=="3文字"){
+                returnnum=this.threecalc();
+              } else if(moji=="4文字"){
+                returnnum = this.fourcalc();
+              } else if(moji=="5文字"){
+                returnnum = this.fivecalc();
+              }
+
+              this.result=returnnum;
+            },
+            namecalc:function(){
+              var roll=[
+                '拳闘士','剣闘士','剣士','剣聖','侍','流浪人',
+                '兵士','騎士','暗黒騎士','竜騎士','聖騎士','戦士',
+                '狂戦士','魔法戦士','魔法剣士','傭兵','狙撃手','狩人',
+                '暗殺者','盗賊','山賊','忍者','神官','シャーマン',
+                '修道僧','修道女','預言者','魔女','魔法使い','魔導師',
+                '魔術師','黒魔術師','占い師','祓魔師','陰陽師','リッチ',
+                '皇帝','将軍','錬金術師','賢者','村人','勇者',
+                'エルフ','ドワーフ','吟遊詩人','ヴァルキリー','精霊','エルダードワーフ',
+                'ハイエルフ'
+              ]
+              var name=this.name;
+              if(name==''){
+                name='名もなき'+roll[Math.floor(Math.random() * roll.length)];
+              } else {
+                name=roll[Math.floor(Math.random() * roll.length)] + 'の' + name;
+              }
+              this.name=name
+            },
+            popUpTweetWindow:function() {
+              var message = `${this.name}は"${this.result}"をくりだした!!`;
+              const url = `https://twitter.com/intent/tweet?text=${message}`;
+              const option = 'status=1,width=818,height=400,top=100,left=100';
+              window.open(url, 'twitter', option);    
+            },
+          }
+        });
+      </script>
+	</body>
+</html>

@@ -2,19 +2,32 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>必殺技～君の最強、見せてみろ～</title>
 		<link rel="stylesheet" href="style.css" >
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <!--ツイッターカード用のパラメータ設定-->
+    <meta name="twitter:card" content="summary_large_image"> 
+    <meta name="twitter:site" content="@Sokora_no_info">
+    <meta name="twitter:title" content="必殺技ジェネレーター">
+    <meta name="twitter:description" content="最強の必殺技を繰り出せ！">
+    <meta name="twitter:image" content="back.jpg">
+    <!--ファビコン-->
+    <link rel="icon" href="favicon.ico">
+    <!--SEO対策-->
+    <meta name="keyword" content="必殺技, 必殺技ジェネレータ, かっこいい漢字, RPG">
+    <meta name="description" content="自分だけのかっこいい必殺技を繰り出してみよう！　ツイッターに投稿して、みんなに自慢しよう！">
 	</head>
 	
 	<body>
 		<main id="app">
+      <!--１枚目の画面-->
       <div v-if="center" key="center" id="center">
         <h1>必殺技</h1>
 		    <p class="content">～最強の一撃をみせてみろ～</p>
         <p v-on:click="watchLeft" id="button">始める</p>
       </div>
-             
+      
+      <!--２枚目の画面-->
       <div v-if="left" key="left" id="left">
         <p id="ti">名前</p>
         <input type="text" id="name" v-model="name" placeholder="名前を入力してくれ！"><br>
@@ -29,6 +42,7 @@
         <div v-on:click="watchRight" id="button2">必殺技を出す</div>
       </div>
              
+      <!--３枚目の画面-->
       <div v-if="right" key="right" id="right">
         <p id="nameupPlus">{{name}}は</p>
         <h1 id="rere">{{result}}</h1>
@@ -53,39 +67,46 @@
             }
           },
           methods: {
+            //1枚目を表示するための関数
             watchCenter: function() {
               this.center = true;
               this.left = false;
               this.right = false;
+              //データの初期化
               this.name='';
-              this.moji='5文字',
+              this.moji='2文字',
               this.result='';
             },
+            //２枚目を表示するための関数
             watchLeft: function() {
               this.center = false;
               this.left = true;
               this.right = false;
             },
+            //3枚目を表示するための関数
             watchRight: function() {
               this.center = false;
               this.left = false;
               this.right = true;
+              //職業生成関数呼び出し
               this.namecalc();
+              //dataの変数mojiを取得
               var moji=this.moji
+               //文字数に応じた長さを選出
               if(moji=='2文字'){
-                var result = this.twocalc();
+                var result = this.calc(2);
               } else if(moji=='3文字'){
-                var result = this.threecalc();
+                var result = this.calc(3);
               } else if(moji=='4文字'){
-                var result = this.fourcalc();
+                var result = this.calc(4);
               }else if(moji=='5文字'){
-                var result = this.fivecalc();
+                var result = this.calc(5);
               }
+              //dataの変数resultを更新
               this.result = result
             },
-            twocalc:function(){
-              var returnnum;
-              var num;
+            //文字列を作成する関数
+            calc:function(numenume){
               var one=[
               '双','散','裂','衝','王','真','破','攻','斬',
               '閃','襲','暴','舞','羅','空','剣','滅','極',
@@ -95,94 +116,41 @@
               '終','黒','竜','華','星','聖','神','虚','燐',
               '氷','風','雷','邪','武','究','獄','零','夜',
               '光','骸','朧','紅','飛','龍','迅','猛','鎧',
-              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
+              '戒','閻','鬼','鎖','桜','獅','暗','緋','焔',
               '死','幻','無','皇'
               ];
-              var two=[
-              '伏竜','朧月','月光','竜裂','竜穿','鳳凰',
-              '幻影','虚無','緋炎','終焉','刹那','影月',
-              '紅蓮','煉獄','空蝉','陽炎','蒼穹','月虹',
-              '白夜','緋天','華炎','氷点','殲滅','閃光',
-              '氷蒼','火焔','氷華','血讐','破天','流星',
-              '天空','滅殺','陽影','太陽','星影','凶星',
-              '天照','砕火','烈光','開世','撤雷','灼刀',
-              '裂風','浄天','牙突'
-              ];
-              var check=Math.floor(Math.random() *100);
-              if (check<80){
-                returnnum= one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
-              } else {
-                returnnum= two[Math.floor(Math.random() * two.length)];
+              //文字数に応じた文字列を算出
+              if (numenume == 2){
+                return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+              } else if(numenume==3){
+                return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+              } else if(numenume==4){
+                return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
+              } else if(numenume==5){
+                return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
               }
-              return returnnum;
             },
-            threecalc:function(){
-              var returnnum;
-              var num;
-              var one=[
-              '双','散','裂','衝','王','真','破','攻','斬',
-              '閃','襲','暴','舞','羅','空','剣','滅','極',
-              '魔','封','覇','陣','刃','翼','絶','乱','天',
-              '攻','護','弾','砕','砲','血','翔','弓','蹴',
-              '牙','拳','断','蒼','月','憤','傲','炎','讐',
-              '終','黒','竜','華','星','聖','神','虚','燐',
-              '氷','風','雷','邪','武','究','獄','零','夜',
-              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
-              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
-              '死','幻','無','皇'
-              ];
-              return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
-            },
-            fourcalc:function(){
-              var returnnum;
-              var num;
-              var one=[
-              '双','散','裂','衝','王','真','破','攻','斬',
-              '閃','襲','暴','舞','羅','空','剣','滅','極',
-              '魔','封','覇','陣','刃','翼','絶','乱','天',
-              '攻','護','弾','砕','砲','血','翔','弓','蹴',
-              '牙','拳','断','蒼','月','憤','傲','炎','讐',
-              '終','黒','竜','華','星','聖','神','虚','燐',
-              '氷','風','雷','邪','武','究','獄','零','夜',
-              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
-              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
-              '死','幻','無','皇'
-              ];
-              return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
-            },
-            fivecalc:function(){
-              var returnnum;
-              var num;
-              var one=[
-              '双','散','裂','衝','王','真','破','攻','斬',
-              '閃','襲','暴','舞','羅','空','剣','滅','極',
-              '魔','封','覇','陣','刃','翼','絶','乱','天',
-              '攻','護','弾','砕','砲','血','翔','弓','蹴',
-              '牙','拳','断','蒼','月','憤','傲','炎','讐',
-              '終','黒','竜','華','星','聖','神','虚','燐',
-              '氷','風','雷','邪','武','究','獄','零','夜',
-              '光','骸','朧','紅','飛','龍','迅','猛','鎧',
-              '戒','閻','鬼','鎖','桜','獅','雫','緋','焔',
-              '死','幻','無','皇'
-              ];
-              return one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)] + one[Math.floor(Math.random() * one.length)];
-            },
+            //もう一度ボタン用の関数
             nextcalc:function(){
+              //dataの変数mojiを取得                                                                            
               var moji= this.moji;
               var returnnum;
+              //文字数に応じた長さを選出
               if(moji=="2文字"){
-                returnnum=this.twocalc();
+                returnnum=this.calc(2);
               }else if(moji=="3文字"){
-                returnnum=this.threecalc();
+                returnnum=this.calc(3);
               } else if(moji=="4文字"){
-                returnnum = this.fourcalc();
+                returnnum = this.calc(4);
               } else if(moji=="5文字"){
-                returnnum = this.fivecalc();
+                returnnum = this.calc(5);
               }
-
+              //dataの変数resultを更新
               this.result=returnnum;
             },
+            //名前につける職業を決める関数
             namecalc:function(){
+              //データ
               var roll=[
                 '拳闘士','剣闘士','剣士','剣聖','侍','流浪人',
                 '兵士','騎士','暗黒騎士','竜騎士','聖騎士','戦士',
@@ -194,18 +162,26 @@
                 'エルフ','ドワーフ','吟遊詩人','ヴァルキリー','精霊','エルダードワーフ',
                 'ハイエルフ'
               ]
+              //dataより変数nameを取得
               var name=this.name;
+              //空白の時は名無し、それ以外は名前に職業を結合する
               if(name==''){
                 name='名もなき'+roll[Math.floor(Math.random() * roll.length)];
               } else {
                 name=roll[Math.floor(Math.random() * roll.length)] + 'の' + name;
               }
+              //dataの変数nameを更新
               this.name=name
             },
+            //ツイッター投稿用の関数
             popUpTweetWindow:function() {
+              //投稿用メッセージ作成
               var message = `${this.name}は"${this.result}"をくりだした!!`;
-              const url = `https://twitter.com/intent/tweet?text=${message}`;
+              //投稿用URL作成
+              const url = `https://twitter.com/intent/tweet?text=${message}&url=https://hissatsuwaza.web.fc2.com/`;
+              //window作成変数
               const option = 'status=1,width=818,height=400,top=100,left=100';
+              //window作成（Mac非対応でした）
               window.open(url, 'twitter', option);    
             },
           }
